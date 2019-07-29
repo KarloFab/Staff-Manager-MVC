@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+    
+
+                    @Html.ActionLink("Kupci", "Kupci", null, htmlAttributes: new { @class = "navbar-brand" })
+                    @Html.ActionLink("Racuni", "Racuni", new { id = -1 }, htmlAttributes: new { @class = "navbar-brand" })
+
+                </div>
+                <div class="navbar-collapse">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+    }
+        <div class="container body-content" style="height:100%;">
+            @RenderBody()
+
+            <footer style="clear:both;margin-top:20px;">
+                <hr />
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/js")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

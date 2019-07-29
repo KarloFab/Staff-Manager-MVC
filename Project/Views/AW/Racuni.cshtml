@@ -1,0 +1,92 @@
+﻿
+
+@model Project.Models.RacunViewModel
+
+@{
+    ViewBag.Title = "Racuni";
+    var idkupac = (int)ViewBag.idkupac;
+    bool allkupci = false;
+
+}
+
+
+@section Scripts{
+    <script>
+        $("table").DataTable({
+
+            "iDisplayLength": 5,
+            "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]]
+        });
+    </script>
+
+}
+
+<h2 style="color:white;">Racuni</h2>
+
+<hr />
+<br />
+<div style="height:700px;">
+    <table class="table col-xs-12" style="background:rgba(0,0,0,0.7);color:white; font-size:17px;
+        border-collapse: separate; border-spacing: 0 10px;text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.Label(expression: "Datum izdavanja")
+                </th>
+                <th>
+                    @Html.Label(expression: "Broj racuna")
+                </th>
+                <th>
+                    @Html.Label(expression: "Komercijalist")
+                </th>
+                <th>
+                    @Html.Label(expression: "Kreditna kartica")
+                </th>
+                <th>
+                    @Html.Label(expression: "Komentar")
+                </th>
+                <th>
+                    @Html.Label(expression: "Stavke")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Racuni)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumIzdavanja)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BrojRacuna)
+                    </td>
+                    <td>
+                      
+                        @Html.ActionLink(Model.Komercijalist.First(k => k.Person.ID == item.KomercijalistID).ToString(), "Komercijalist", new { id = item.KomercijalistID, idkupac = item.KupacID }, htmlAttributes: new { @class = "btn btn-default" })
+                   </td>
+                    <td>
+                        @Html.ActionLink(Model.KreditneKartice.First(k => k.ID == item.KreditnaKarticaID).Tip, "KreditnaKartica", new { id = item.KreditnaKarticaID, idkupac = idkupac}, htmlAttributes: new { @class = "btn btn-default" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Komentar)
+                    </td>
+                    <td>
+                        
+                        @if (idkupac == -1)
+                        {
+                            allkupci = true;
+                           
+                        }
+                 
+                        @Html.ActionLink("Stavke", "Stavke", new { id = item.IDRacun, idkupac = item.KupacID,allkupci=allkupci }, htmlAttributes: new { @class = "btn btn-default" })
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        @Html.ActionLink("Back", "Kupci", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+</div>

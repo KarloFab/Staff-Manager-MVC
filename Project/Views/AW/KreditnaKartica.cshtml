@@ -1,0 +1,47 @@
+﻿@model Zadatak1.Models.KreditnaKartica
+
+@{
+    ViewBag.Title = "KreditnaKartica";
+    int idkupac = (int)ViewBag.idkupac;
+}
+
+<h2 style="color:white;">Kreditna kartica</h2>
+
+<div>
+    <h4>Kreditna kartica</h4>
+    <hr />
+    <dl class="dl-horizontal" id="dl">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Broj)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Broj)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IstekMjesec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IstekMjesec)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IstekGodina)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IstekGodina)
+        </dd>
+
+    </dl>
+</div>

@@ -1,0 +1,54 @@
+﻿@model Kupac
+
+<div class="form-control col-lg-8 col-lg-offset-1" style="color:white;background:rgba(0,0,0,0.8);
+     height:200px;margin-bottom:20px; border-radius:15px;">
+    <div class="table-responsive">
+        <table style="font-size:17px;text-align:center;">
+
+            <tr>
+                <td>
+                    <img src="~/Resources/user.png" />
+                </td>
+                <td width="100px">
+                    @Html.DisplayFor(modelItem => Model.Person.Ime)
+                </td>
+                <td width="100px">
+                    @Html.DisplayFor(modelItem => Model.Person.Prezime)
+                </td>
+                <td width="100px;">
+                    <i class="glyphicon glyphicon-map-marker"></i>
+                    @Html.Action(actionName: "GetGrad", routeValues: new { id = Model.GradID })
+                </td>
+                <td width="250px">
+                    <i class="glyphicon glyphicon-email"></i>
+                    <a href="mailto:@Model.Email">@Model.Email</a>
+                </td>
+                <td width="200px">
+                    <i class="glyphicon glyphicon-earphone"></i>
+                    @Html.DisplayFor(modelItem => Model.Telefon)
+                </td>
+                <td width="60px">
+                    @Html.ActionLink("Racuni", "Racuni", new { id = Model.Person.ID }, htmlAttributes: new { @class = "btn btn-default" })
+                </td>
+            </tr>
+            <tr></tr>
+            @if (User.IsInRole("Administrator"))
+            {
+
+
+                <tr>
+                    <td></td>
+                    <td>
+
+                        @Html.ActionLink("Uredi", "EditKupac", new { id = Model.Person.ID }, htmlAttributes: new { @class = "btn btn-primary" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Obrisi", "DeleteKupac", new { id = Model.Person.ID },
+                     htmlAttributes: new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+            </table>
+    </div>
+
+</div>

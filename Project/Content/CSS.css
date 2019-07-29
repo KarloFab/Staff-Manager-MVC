@@ -1,0 +1,90 @@
+﻿
+body {
+    background-image: url('../Resources/cityjpg.jpg');
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#dl {
+   color:white;
+   background:rgba(0,0,0,0.7);
+   padding:10px;
+   color:white;
+   border-radius:25px;
+   width:400px;
+   font-size:18px;
+}
+
+#loginPromptDateTime {
+    color: white;
+    width: 400px;
+    margin-top: 10px;
+    float: left;
+    margin-right: 90px;
+    padding: 20px;
+}
+
+#loginForm {
+    color: white;
+    width: 350px;
+    border-radius:25px;
+    margin-top: 50px;
+    float: right;
+    margin-right: 150px;
+    background: rgba(0,0,0,0.8);
+    padding: 30px;
+}
+
+#clock {
+    font-size: 50px;
+    margin-left: 50px;
+    font-weight: 200;
+    color:white;
+}
+
+#date {
+    font-size: 65px;
+    font-weight: 300;
+    color: white;
+}
+
+#login {
+    margin-left: 30px;
+    font-size: 50px;
+    font-weight: 300;
+    color: white;
+ 
+}
+h2 {
+    color: white;
+}
+
+#clock, #date, #login,h2 {
+    text-shadow: 3px 3px #000000
+}
+
+
+.btn-default{
+    width:150px;
+}
+.btn-primary {
+    width: 90px;
+}
+.btn-warning {
+    width: 90px;
+}
+
+.navbar-brand {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+
+
+}
+.navbar-brand:hover {
+    color:darkgray;
+ 
+}
+
+nav:hover {
+    background: rgba(0,0,0,0.5);
+}

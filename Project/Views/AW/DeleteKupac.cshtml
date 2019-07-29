@@ -1,0 +1,74 @@
+﻿@model Kupac
+
+@{
+    ViewBag.Title = "DeleteKupac";
+    string grad = ViewBag.grad as string;
+    string drzava = ViewBag.drzava as string;
+}
+
+<h2 style="color:white;">DeleteKupac</h2>
+
+<h3>Zelite li obrisati ovog kupca?</h3>
+<div>
+    <h4>Kupac</h4>
+    <hr />
+    <dl class="dl-horizontal" id="dl">
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Prezime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Prezime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefon)
+        </dd>
+
+        <dt>
+            @Html.Label(expression: "Grad")
+        </dt>
+
+        <dd>
+            @Html.Label(expression: grad)
+        </dd>
+
+        <dt>
+            @Html.Label(expression: "Drzava")
+        </dt>
+
+        <dd>
+            @Html.Label(expression: drzava)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+       <div class="form-actions no-color">
+        @Html.ActionLink("Back ", "Kupci", null, htmlAttributes: new { @class="btn btn-primary" })
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+    </div>
+    }
+</div>

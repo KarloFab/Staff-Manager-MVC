@@ -1,0 +1,120 @@
+﻿
+@model Project.Models.StavkeViewModel
+
+@{
+    ViewBag.Title = "Stavke";
+    var idkupac = (int)ViewBag.idkupac;
+    
+}
+
+<h2 style="color:white;">Stavke</h2>
+<hr />
+
+@section Scripts{
+    <script>
+        $("table").DataTable({
+        });
+    </script>
+
+}
+
+
+@if (!Model.Stavke.Any())
+{
+    <p style="color:darkred; font-size:40px;">Racun nema stavki</p>
+}
+else
+{
+    <table class="table" style="background:rgba(0,0,0,0.7);color:white;font-size:17px;padding:10px;"
+           >
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.Label(expression: "Kolicina")
+                </th>
+                <th>
+                    @Html.Label(expression: "Proizvod")
+                </th>
+                <th>
+                    @Html.Label(expression: "Potkategorija")
+                </th>
+                <th>
+                    @Html.Label(expression: "Kategorija")
+                </th>
+
+                <th>
+                    @Html.Label(expression: "Cijena po komadu")
+                </th>
+                <th>
+                    @Html.Label(expression: "Popust")
+                </th>
+                <th>
+                    @Html.Label(expression: "Ukupna cijena")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Stavke)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kolicina)
+                </td>
+                <td>
+                    @Html.ActionLink(Model.Proizvodi.First(p => p.IDProizvod == item.ProizvodID).Naziv.Split(' ')[0], "Proizvod", new { id = item.ProizvodID, idracun = item.RacunID, idkupac=idkupac,allkupci=Model.AllKupci }, htmlAttributes: new { @class = "btn btn-default" })
+                </td>
+                <td>
+                    @Html.Label(Model.Proizvodi.First(p => p.IDProizvod == item.ProizvodID).Potkategorija)
+                </td>
+                <td>
+                    @Html.Label(Model.Proizvodi.First(p => p.IDProizvod == item.ProizvodID).Kategorija)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CijenaPoKomadu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PopustUPostocima)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UkupnaCijena)
+                </td>
+            </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <label> Summary: </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>@Model.Stavke.Sum(m => m.Kolicina)</label>
+                </td>
+                <td></td>
+                <td>
+                    <label>@Model.Stavke.Sum(m => m.CijenaPoKomadu).ToString("c")</label>
+                </td>
+                <td>
+                    <label>@Model.Stavke.Sum(m => m.PopustUPostocima)</label>
+                </td>
+                <td>
+                    <label>@Model.Stavke.Sum(m => m.UkupnaCijena).ToString("c")</label>
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+
+
+}
+
+    <p>
+        @if (Model.AllKupci)
+        {
+            idkupac = -1;
+        }
+   
+        @Html.ActionLink("Back", "Racuni", new { id = idkupac }, htmlAttributes: new { @class = "btn btn-primary" })
+    </p>

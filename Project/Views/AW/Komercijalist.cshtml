@@ -1,0 +1,40 @@
+﻿@model Zadatak1.Models.Komercijalist
+
+@{
+    ViewBag.Title = "Komercijalist";
+}
+
+
+
+<h2 style="color:white;">Komercijalist</h2>
+
+<div>
+    <h4>Komercijalist</h4>
+    <hr />
+    <dl class="dl-horizontal" id="dl">
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Ime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Ime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Prezime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Prezime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StalniZaposlenik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StalniZaposlenik)
+        </dd>
+
+    </dl>
+</div>

@@ -1,0 +1,98 @@
+﻿@using Project.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<h1 style="color:white;font-size:45px;
+  text-shadow: 3px 3px #000000;">Welcome</h1>
+<script>
+    window.onload = function () {
+        startTime();
+
+    }
+    function startTime() {
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('clock').innerHTML =
+            h + ":" + m + ":" + s;
+        var t = setTimeout(startTime, 500);
+    }
+    function checkTime(i) {
+        if (i < 10) { i = "0" + i };
+        return i;
+    }
+
+</script>
+
+<div class="row">
+    <div class="col-xs-12 col-md-7">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3>Login</h3>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-3" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-10">
+                    
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-sm-offset-1 col-xs-offset-1 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+                <hr />
+                <p>Not a user? Register</p>
+                <div class="col-md-offset-3 col-md-10">
+
+                    <p>
+                        @Html.ActionLink("Register", "Register", null, new { @class = "btn btn-primary" })
+                    </p>
+                </div>
+                @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+            }
+        </section>
+    </div>
+    <div class="col-lg-4 hidden-xs hidden-sm" style="margin-top:80px;">
+        <div class="form-container">
+            <div class="form-group">
+                <label id="date">@DateTime.Now.ToString("dd/MM/yyyy")</label>
+            </div>
+            <div class="form-group">
+                <div id="clock"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

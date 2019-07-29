@@ -1,0 +1,159 @@
+﻿@model Kupac
+
+@{
+    ViewBag.Title = "Edit";
+    var ddlOpcije = ViewBag.gradovi as List<Grad>;
+    var ddlDrzave = ViewBag.drzave as List<Drzava>;
+}
+
+<style>
+    .field-validation-valid {
+        display: none;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+</style>
+
+<h2 style="color:white;">Edit</h2>
+<hr />
+<div class="form-group">
+    <label>Odaberi kupca:</label>
+    <select id="ddlKupci" class="form-control"></select>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+       $(function () {
+           getData();
+
+       })
+
+       function getData() {
+           $("#ddlKupci").html("");
+
+           $.ajax({
+
+               url: '@Url.Action(controllerName:"AJAX",actionName:"GetKupci")',
+               success: function (data) {
+
+                   $(data).each(function (index,kupac) {
+
+                        var punoIme = `${kupac.Person.Ime} ${kupac.Person.Prezime}`;
+                        var option = new Option(punoIme, kupac.Person.ID, null, kupac.Person.ID ==@Model.Person.ID)
+
+                        $("#ddlKupci").append(option);
+
+                   })
+               }
+
+           })
+
+       }
+
+       $("#ddlKupci").on('change', function () {
+
+           var kupacid = $(this).val();
+
+           $("p#info").html("");
+
+           $.ajax({
+               url: '@Url.Action(controllerName:"AJAX",actionName:"GetKupac")',
+               data: { id: kupacid },
+               success: function (kupac) {
+                   $("#Person_ID").val(kupac.Person.ID);
+                   $("#Person_Ime").val(kupac.Person.Ime);
+                   $("#Person_Prezime").val(kupac.Person.Prezime);
+                   $("#Email").val(kupac.Email);
+                   $("#Telefon").val(kupac.Telefon);
+                   $("#GradID").val(kupac.GradID);
+               }
+
+           })
+
+       })
+
+    </script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <hr />
+
+
+    <div class="form-horizontal" style="background:rgba(0,0,0,0.7);padding:10px;color:white;border-radius:25px;">
+        <h4 style="font-size:30px;margin-left:10px;">Kupac</h4>
+
+        @Html.ValidationSummary(false, "Desile su se greske", new { @class = "text-danger" })
+
+        @Html.HiddenFor(Model => Model.Person.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Person.Ime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Person.Ime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Person.Ime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Person.Prezime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Person.Prezime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Person.Prezime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefon, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GradID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList(name: "GradID",
+                    selectList: new SelectList(items: ddlOpcije, dataTextField:"Naziv",dataValueField:"IDGrad")
+                   ,htmlAttributes: new { @class="form-control" })
+                @Html.ValidationMessageFor(model => model.GradID, "*", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DrzavaID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList(name: "DrzavaID",
+                    selectList: new SelectList(items: ddlDrzave, dataTextField:"Naziv",dataValueField:"IDDrzava")
+                   ,htmlAttributes: new { @class="form-control" })
+                @Html.ValidationMessageFor(model => model.DrzavaID, "*", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+
+}
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Kupci", null, new { @class = "btn btn-primary" })
+</div>
+
